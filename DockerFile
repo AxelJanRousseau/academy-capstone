@@ -1,0 +1,8 @@
+FROM python:3.8
+# not to self: get aws credentials, use environment variable to gent info in aws cli
+WORKDIR /usr/src/app
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY ./py_spark/ .
+CMD python script.py
