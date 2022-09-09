@@ -3,7 +3,7 @@ import datetime as dt
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
 from airflow.operators.bash import BashOperator
-from airflow.providers.amazon.aws.operators.batch import BatchOperator
+from airflow.contrib.operators.awsbatch_operator import AWSBatchOperator
 
 dag = DAG(
     dag_id="Docker_flow",
