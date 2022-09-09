@@ -8,19 +8,21 @@ import json
 SNOWFLAKE_SOURCE_NAME = "net.snowflake.spark.snowflake"
 
 conf = SparkConf()
-conf.set('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:3.3.2')
-conf.set('spark.jars.packages','net.snowflake:snowflake-jdbc:3.13.22')
-conf.set('spark.jars.packages','net.snowflake:spark-snowflake_2.12:2.11.0-spark_3.3')
+conf.set('spark.jars.packages', 'org.apache.hadoop:hadoop-aws:3.3.2,net.snowflake:snowflake-jdbc:3.13.22,net.snowflake:spark-snowflake_2.12:2.11.0-spark_3.3')
+# conf.set('spark.jars.packages','net.snowflake:snowflake-jdbc:3.13.22')
+# conf.set('spark.jars.packages','net.snowflake:spark-snowflake_2.12:2.11.0-spark_3.3')
 conf.set("fs.s3.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
 conf.set("fs.s3a.aws.credentials.provider", "com.amazonaws.auth.InstanceProfileCredentialsProvider,com.amazonaws.auth.DefaultAWSCredentialsProviderChain")
 spark = SparkSession.builder.config(conf=conf).getOrCreate()
+
 def get_df() -> DataFrame:
+
     if __debug__:
         return spark.read.json('./data_part_1.json')
     return spark.read.json('s3a://dataminded-academy-capstone-resources/raw/open_aq/')
     
 
-def flatten_frame(df: DataFrame):
+def flatten_frame(df: DataFrame) -> DataFrame:
     df = df.withColumn('latitude', sf.col("coordinates.latitude"))
     df = df.withColumn('longitude',sf.col('coordinates.longitude'))
 
@@ -60,7 +62,7 @@ def main():
     secrets['sfSchema']="AXELJAN_ROUSSEAU"
 
     df.write.format(SNOWFLAKE_SOURCE_NAME).options(**secrets).option("dbtable", "axel_table").mode('overwrite').save()
-    print('debug')
+    print('Done')
     
 
 if __name__ == "__main__":
