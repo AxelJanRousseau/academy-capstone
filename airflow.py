@@ -9,8 +9,9 @@ dag = DAG(
     dag_id="Docker_flow",
     description="deploy docker to aws",
     default_args={"owner": "Airflow"},
-    schedule_interval="*/10 * * * *",
+    schedule_interval='@once',
     start_date=dt.datetime(year=2022, month=9, day=9),
+    catchup=False
 )
 
 submit_batch_job = AWSBatchOperator(
