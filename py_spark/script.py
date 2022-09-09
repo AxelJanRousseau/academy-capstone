@@ -24,7 +24,7 @@ def flatten_frame(df: DataFrame):
     df = df.withColumn('latitude', sf.col("coordinates.latitude"))
     df = df.withColumn('longitude',sf.col('coordinates.longitude'))
 
-    df = df.withColumn('date_time_in_utc', sf.to_date(sf.col('date.utc')))
+    df = df.withColumn('date_time_in_utc', sf.to_timestamp(sf.col('date.utc')))
     
     return df
 
