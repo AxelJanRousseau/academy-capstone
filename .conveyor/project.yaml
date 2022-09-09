@@ -1,0 +1,13 @@
+docker:
+    path: .
+id: 37b452d9-d60f-41dd-a159-a0293676e1a7
+name: axeljan_project
+resources:
+    path: resources
+streaming:
+    filename: streaming.yaml
+template: ""
+version: "0.3"
+workflows:
+    path: dags
+    version: "2"

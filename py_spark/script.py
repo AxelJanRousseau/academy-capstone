@@ -17,9 +17,10 @@ spark = SparkSession.builder.config(conf=conf).getOrCreate()
 
 def get_df() -> DataFrame:
 
-    if __debug__:
-        return spark.read.json('./data_part_1.json')
-    return spark.read.json('s3a://dataminded-academy-capstone-resources/raw/open_aq/')
+    # if __debug__:
+    #     return spark.read.json('./data_part_1.json')
+    return spark.read.json('s3a://dataminded-academy-capstone-resources2/raw/open_aq/')
+    
     
 
 def flatten_frame(df: DataFrame) -> DataFrame:
