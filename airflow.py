@@ -9,15 +9,16 @@ dag = DAG(
     dag_id="Docker_flow",
     description="deploy docker to aws",
     default_args={"owner": "Airflow"},
-    schedule_interval="/10 * * * *",
+    schedule_interval="*/10 * * * *",
     start_date=dt.datetime(year=2022, month=9, day=9),
 )
 
-submit_batch_job = BatchOperator(
+submit_batch_job = AWSBatchOperator(
     task_id='submit_batch_job',
     job_name='axeljan_rousseau_airflow_docker_job',
     job_queue='academy-capstone-summer-2022-job-queue',
     job_definition='axeljan_rousseau_docker_app',
+    overrides={},
     dag=dag
 )
 
